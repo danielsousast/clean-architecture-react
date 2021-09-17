@@ -1,4 +1,8 @@
 {
+  "name": "clean-react",
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "@types/node": "^16.9.2",
