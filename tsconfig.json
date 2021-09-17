@@ -1,22 +1,28 @@
 {
     "compilerOptions": {
-        "target": "es6",
+        "target": "es5",
         "lib": [
             "dom",
             "dom.iterable",
             "esnext"
         ],
         "allowJs": true,
-        // "skipLibCheck": true,
-        "strict": false,
-        // "forceConsistentCasingInFileNames": true,
-        // "noEmit": true,
+        "skipLibCheck": true,
         "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": false,
+        "noFallthroughCasesInSwitch": true,
         "module": "esnext",
         "moduleResolution": "node",
         "resolveJsonModule": true,
-        // "isolatedModules": true,
-        "jsx": "react",
+        "isolatedModules": true,
+        "sourceMap": true,
+        "noEmit": false,
+        "jsx": "react-jsx",
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
         "rootDir": "src",
         "baseUrl": "src",
         "paths": {
@@ -26,10 +32,11 @@
         }
     },
     "include": [
-        "src"
+        "src/**/*"
     ],
     "exclude": [
         "node_modules",
-        "src/main/test/cypress"
+        "build",
+        "dist"
     ]
 }
