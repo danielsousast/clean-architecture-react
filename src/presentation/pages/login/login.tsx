@@ -57,6 +57,8 @@ const Login: React.FC = () => {
           />
           <button
             type="submit"
+            data-testid="submit"
+            disabled
             style={{
               border: "none",
               height: 40,
@@ -71,7 +73,6 @@ const Login: React.FC = () => {
           </button>
 
           <button
-            type="submit"
             style={{
               border: "none",
               height: 40,
