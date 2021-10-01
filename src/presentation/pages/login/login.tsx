@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Context from "@/presentation/contexts/form/form-context";
 import FormStatus from "@/presentation/components/form-status/form-status";
+import { Header } from "@/presentation/components";
 
 interface StateProps {
   loading: boolean;
@@ -20,9 +21,7 @@ const Login: React.FC = () => {
         alignSelf: "center",
       }}
     >
-      <header>
-        <h1>Dev Enquetes</h1>
-      </header>
+      <Header />
       <Context.Provider value={state}>
         <form
           style={{
