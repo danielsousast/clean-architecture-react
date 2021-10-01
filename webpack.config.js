@@ -1,52 +1,62 @@
-
-const path  = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require("path");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-    mode = 'development',
-    entry: './src/main/index.tsx',
-    output: {
-        path: path.join(__dirname, 'public/js'),
-        publicPath: '/public/js',
-        filename: 'bundle.js'
+  mode: "development",
+  entry: "./src/main/index.tsx",
+  output: {
+    path: path.join(__dirname, "public/js"),
+    publicPath: "/public/js",
+    filename: "bundle.js",
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", "scss"],
+    alias: {
+      "@": path.join(__dirname, "src"),
     },
-    resolve: {
-        extensions: [
-            '.ts', '.tsx', '.js', '.scss'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.ts(x?)$/,
+        loader: "ts-loader",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader",
+            options: {
+              modules: false,
+            },
+          },
+          {
+            loader: "sass-loader",
+          },
         ],
-        alias: {
-            '@': path.join(__dirname, 'src')
-        }
+      },
+    ],
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "public"),
     },
-    module: {
-        rules: [{
-            test: /\.ts(x?)$/,
-            loader: 'ts-loader',
-            exclude:/\node_modules/
-        }, {
-            test: /\.scss/,
-            use: [{
-                loader: 'style-loader',
-            }, {
-                loader: 'css-loader',
-                options: {
-                    modules: true
-                }
-            }, {
-                loader: 'sass-loader',
-            }]
-        }]
+    devMiddleware: {
+      index: true,
+      mimeTypes: { "text/html": ["phtml"] },
+      publicPath: "/public",
+      serverSideRender: true,
+      writeToDisk: true,
     },
-    devServer: {
-        contentBase: './public',
-        writeToDisck: true,
-        historyApiFallback: true
-    },
-    externals: {
-        react: 'React',
-        'react-dom': 'ReactDOM'
-    },
-    plugins: [
-        new CleanWebpackPlugin()
-    ]
-}
+    historyApiFallback: true,
+  },
+  externals: {
+    react: "React",
+    "react-dom": "ReactDOM",
+  },
+  plugins: [new CleanWebpackPlugin()],
+};
