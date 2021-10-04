@@ -13,6 +13,7 @@ interface StateProps {
   loading: boolean;
   error: string;
   email: string;
+  password: string;
 }
 
 type Props = {
@@ -24,11 +25,16 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
     loading: false,
     error: "",
     email: "",
+    password: "",
   });
 
   React.useEffect(() => {
     validation.validate({ email: state.email });
   }, [state.email]);
+
+  React.useEffect(() => {
+    validation.validate({ password: state.password });
+  }, [state.password]);
 
   return (
     <div
