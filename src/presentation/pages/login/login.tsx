@@ -7,17 +7,28 @@ import {
   LinkButton,
   PrimaryButton,
 } from "@/presentation/components";
+import { Validation } from "@/presentation/protocols/validation";
 
 interface StateProps {
   loading: boolean;
   error: string;
+  email: string;
 }
 
-const Login: React.FC = () => {
-  const [state] = useState<StateProps>({
+type Props = {
+  validation: Validation;
+};
+
+const Login: React.FC<Props> = ({ validation }: Props) => {
+  const [state, setState] = useState<StateProps>({
     loading: false,
     error: "",
+    email: "",
   });
+
+  React.useEffect(() => {
+    validation.validate({ email: state.email });
+  }, [state.email]);
 
   return (
     <div
@@ -27,7 +38,7 @@ const Login: React.FC = () => {
       }}
     >
       <Header />
-      <Context.Provider value={state}>
+      <Context.Provider value={{ state, setState }}>
         <form
           style={{
             display: "flex",
