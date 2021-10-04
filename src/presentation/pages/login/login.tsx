@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import Context from "@/presentation/contexts/form/form-context";
 import FormStatus from "@/presentation/components/form-status/form-status";
-import { Header } from "@/presentation/components";
+import {
+  Header,
+  Input,
+  LinkButton,
+  PrimaryButton,
+} from "@/presentation/components";
 
 interface StateProps {
   loading: boolean;
@@ -36,54 +41,22 @@ const Login: React.FC = () => {
         >
           <h2>Login</h2>
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Digite seu email"
-            style={{
-              height: 30,
-              marginBottom: 10,
-            }}
-          />
-          <input
+          <Input type="email" name="email" placeholder="Digite seu email" />
+          <Input
             type="password"
             name="password"
             placeholder="Digite sua senha"
-            style={{
-              height: 30,
-              marginBottom: 10,
-            }}
           />
-          <button
+
+          <PrimaryButton
             type="submit"
             data-testid="submit"
             disabled
-            style={{
-              border: "none",
-              height: 40,
-              marginBottom: 10,
-              backgroundColor: "#880e4f",
-              outline: 0,
-              color: "#fff",
-              borderRadius: 4,
-            }}
-          >
-            Entrar
-          </button>
+            title="Entrar"
+          />
 
-          <button
-            style={{
-              border: "none",
-              height: 40,
-              marginBottom: 10,
-              backgroundColor: "#fff",
-              outline: 0,
-              color: "#880e4f",
-              borderRadius: 4,
-            }}
-          >
-            Criar conta
-          </button>
+          <LinkButton title="Criar conta" />
+
           <FormStatus />
         </form>
       </Context.Provider>
