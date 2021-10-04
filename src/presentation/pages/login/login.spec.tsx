@@ -46,7 +46,7 @@ describe("Login Component", () => {
     expect(emailStatus.textContent).toBe(validationSpy.errorMessage);
   });
 
-  test("Should show  password error if validation fails", () => {
+  test("Should show password error if validation fails", () => {
     const { sut, validationSpy } = makeSut();
 
     const passwordInput = sut.getByTestId("password") as HTMLInputElement;
@@ -56,5 +56,31 @@ describe("Login Component", () => {
     });
     const passwordStatus = sut.getByTestId("password-status");
     expect(passwordStatus.textContent).toBe(validationSpy.errorMessage);
+  });
+
+  test("Should show email stat if validation succeeds", () => {
+    const { sut, validationSpy } = makeSut();
+    validationSpy.errorMessage = "";
+
+    const emailInput = sut.getByTestId("email") as HTMLInputElement;
+
+    fireEvent.input(emailInput, {
+      target: { value: faker.internet.email() },
+    });
+    const emailStatus = sut.getByTestId("email-status");
+    expect(emailStatus.textContent).toBe("");
+  });
+
+  test("Should show password stat if validation succeeds", () => {
+    const { sut, validationSpy } = makeSut();
+    validationSpy.errorMessage = "";
+
+    const passwordInput = sut.getByTestId("password") as HTMLInputElement;
+
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() },
+    });
+    const passwordStatus = sut.getByTestId("password-status");
+    expect(passwordStatus.textContent).toBe("");
   });
 });
