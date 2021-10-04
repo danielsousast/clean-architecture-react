@@ -14,6 +14,8 @@ interface StateProps {
   error: string;
   email: string;
   password: string;
+  emailError: string;
+  passwordError: string;
 }
 
 type Props = {
@@ -26,15 +28,17 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
     error: "",
     email: "",
     password: "",
+    emailError: "",
+    passwordError: "",
   });
 
   React.useEffect(() => {
-    validation.validate("email", state.email);
-  }, [state?.email]);
-
-  React.useEffect(() => {
-    validation.validate("password", state.password);
-  }, [state?.password]);
+    setState((prev) => ({
+      ...prev,
+      emailError: validation.validate("email", state.email),
+      passwordError: validation.validate("password", state.password),
+    }));
+  }, [state?.email, state.password]);
 
   return (
     <div
