@@ -5,13 +5,27 @@ import {
   RenderResult,
   fireEvent,
 } from "@testing-library/react";
+import faker from "faker";
 import Login from "./login";
 import { ValidationSpy } from "@/presentation/test";
-import faker from "faker";
+import { Authentication, AuthenticationParams } from "@/domain/usecases";
+import { AccountModel } from "@/domain/models";
+import { mockAccountModel } from "@/domain/test";
+
+class AuthenticationSpy implements Authentication {
+  account = mockAccountModel();
+  params: AuthenticationParams;
+
+  async auth(params: AuthenticationParams): Promise<AccountModel> {
+    this.params = params;
+    return Promise.resolve(this.account);
+  }
+}
 
 type SutTypes = {
   sut: RenderResult;
   validationSpy: ValidationSpy;
+  authenticationSpy: AuthenticationSpy;
 };
 
 type SutParams = {
@@ -20,10 +34,14 @@ type SutParams = {
 
 const makeSut = (params?: SutParams): SutTypes => {
   const validationSpy = new ValidationSpy();
-  validationSpy.errorMessage = params?.validationError;
-  const sut = render(<Login validation={validationSpy} />);
+  const authenticationSpy = new AuthenticationSpy();
 
-  return { sut, validationSpy };
+  validationSpy.errorMessage = params?.validationError;
+  const sut = render(
+    <Login validation={validationSpy} authentication={authenticationSpy} />
+  );
+
+  return { sut, validationSpy, authenticationSpy };
 };
 
 describe("Login Component", () => {
@@ -120,5 +138,30 @@ describe("Login Component", () => {
     const loading = sut.getByTestId("loading");
 
     expect(loading).toBeTruthy();
+  });
+
+  test("Should call Authentication with correct values", () => {
+    const { sut, authenticationSpy } = makeSut();
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+
+    const emailInput = sut.getByTestId("email") as HTMLInputElement;
+    fireEvent.input(emailInput, {
+      target: { value: email },
+    });
+
+    const passwordInput = sut.getByTestId("password") as HTMLInputElement;
+    fireEvent.input(passwordInput, {
+      target: { value: password },
+    });
+
+    const submitButton = sut.getByTestId("submit");
+    fireEvent.click(submitButton);
+    const loading = sut.getByTestId("loading");
+
+    expect(authenticationSpy.params).toEqual({
+      email,
+      password,
+    });
   });
 });
