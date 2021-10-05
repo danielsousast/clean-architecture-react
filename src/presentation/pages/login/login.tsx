@@ -40,6 +40,15 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
     }));
   }, [state?.email, state.password]);
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+
+    setState({
+      ...state,
+      loading: true,
+    });
+  };
+
   return (
     <div
       style={{
@@ -50,6 +59,7 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
       <Header />
       <Context.Provider value={{ state, setState }}>
         <form
+          onSubmit={handleSubmit}
           style={{
             display: "flex",
             flexDirection: "column",

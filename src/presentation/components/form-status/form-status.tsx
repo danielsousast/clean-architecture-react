@@ -8,7 +8,7 @@ export default function FormStatus() {
 
   return (
     <div data-testid="error-wrap">
-      {loading && <span>Loading...</span>}
+      {loading && <span data-testid="loading">Loading...</span>}
       {error && <span>{error}</span>}
     </div>
   );
