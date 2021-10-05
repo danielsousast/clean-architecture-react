@@ -72,7 +72,7 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
           <PrimaryButton
             type="submit"
             data-testid="submit"
-            disabled
+            disabled={!!state.passwordError || !!state.emailError}
             title="Entrar"
           />
 
